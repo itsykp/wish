@@ -29,6 +29,7 @@ body {
 #wrapper{
     position: relative;
     background-color: transparent;
+    /* Grid/Checkerboard background pattern */
     background-image: linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 1) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255,1) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 76%, transparent 77%, transparent);
     height:100%;
     background-size:80px 80px;
@@ -55,7 +56,7 @@ body {
 .content{
     width: 100%;
     position: relative;
-    display: flex;
+    display: flex; /* Default: row for desktop */
     padding-top: 3rem;
 }
 .content .left, .content .right{
@@ -630,218 +631,210 @@ body {
 
 
 
-@media screen and (max-width: 658px)   {
+/* ###########################################
+#       SMARTPHONE COMPATIBILITY FIX      #
+########################################### 
+*/
 
-    .flag__birthday .flag__left {
-        transform: rotate(-10deg) translate(-119px,3px);
-    }
-
-    .flag__birthday .flag__right {
-        transform: rotate(10deg) translate(-106px,39px) scaleX(-1);
+@media screen and (max-width: 768px) {
+    
+    /* Global Mobile Layout Reset */
+    #wrapper {
+        background-size: 40px 40px; /* Smaller pattern for mobile */
+        height: auto;
+        min-height: 100vh;
     }
 
     .content {
-        width: 100%;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 25px;
+        flex-direction: column; /* Stack left and right sections */
         align-items: center;
-        padding-top: 2rem;
+        padding-top: 1rem;
     }
 
+    .content .left, .content .right {
+        width: 100%; /* Take full width */
+        padding: 0;
+    }
+
+    /* --- Flag Adjustments --- */
+    .flag__birthday {
+        justify-content: center;
+    }
+    .flag__birthday img {
+        width: 200px !important; /* Smaller flags */
+    }
+    .flag__birthday .flag__left {
+        transform: rotate(-10deg) translate(-50px, 30px);
+    }
+    .flag__birthday .flag__right {
+        transform: rotate(10deg) translate(50px, 30px) scaleX(-1);
+    }
+
+    /* --- Left Section (Title and Date) --- */
     .title {
-        position: relative;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        font-family: "Titan One", sans-serif;
-        font-size: 1.5rem;
-        letter-spacing: 8px;
-        flex-direction: column;
-        perspective: 1000px;
+        font-size: 2rem;
+        letter-spacing: normal;
     }
-
-    #btn__letter {
-        position: relative;
-        margin-top: 17px;
-        width: 209px;
-        background-color: var(--color-text-pink);
-        outline: none;
-        padding: 6px 4px;
-        font-size: 1rem;
-        border-radius: 50px;
-        border: 3px solid var(--color-black);
-        font-family: "Sriracha", cursive;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 2;
-        /* transform: scale(1); */
-        transition: all .5s ease-in-out;
-    }
-
-    .cricle {
-        position: absolute;
-        top: 10px;
-        right: -54px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transform: scale(0);
-        animation: scaleCricle 3s 15s forwards ease-in-out;
+    .title .happy, .title .birthday {
+        text-shadow: 2px 2px var(--color-black), -2px 2px var(--color-black), 
+                     2px -2px var(--color-black), -2px -2px var(--color-black);
     }
 
     .title .hat {
-        position: absolute;
-        right: -98px;
-        top: -51px !important;
-        transform: rotate(-40deg);
-        z-index: -1;
-        animation: topHat 4s 7s forwards ease;
+        right: 15px; /* Adjust hat position */
+        top: -20px !important;
+        width: 80px; /* Smaller hat */
+    }
+    @keyframes topHat{
+        20%, 30%{ top: -10px; transform-origin: left; transform: rotate(-40deg); }
+        35%, 100%{ top: -10px; transform: rotate(0deg); }
     }
 
-    .box__letter .letter__border {
-        position: absolute;
-        width: 90vw;
-        height: 315px;
-        background-color: var(--color-white);
-        border-radius: 27px;
-        padding: 17px;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        display: none;
+    .date__of__birth {
+        width: 90vw; /* Take up most of the screen width */
+        max-width: 300px;
+        height: 40px !important;
+        margin-top: 15px;
+    }
+    @keyframes dateOfBirth{
+        50%,100%{
+            width: 90vw;
+            max-width: 300px;
+            height: 40px;
+        }
+    }
+    .date__of__birth span {
+        font-size: 1rem;
+        margin: 0 15px;
     }
 
-    .letter__border .letter {
-        width: 100%;
-        height: 100%;
-        background-color: var(--color-bg-letter);
-        border-radius: 10px;
-        padding-top: 15px;
+    .left .btn {
+        margin-bottom: 20px; /* Add space below button */
+    }
+    #btn__letter {
+        margin-top: 20px;
+        padding: 8px 20px;
+        font-size: 1.1rem;
     }
 
-    .letter__border .letter .title__letter {
-        text-align: center;
-        font-family: 'Dancing Script', cursive;
-        font-weight: bold;
-        font-size: 1.4rem;
+    /* --- Right Section (Image and Balloons) --- */
+    .right .box__account {
+        transform: translateY(0) !important; /* Ensure image is visible quickly */
+        animation: none;
+        margin-bottom: 50px; /* Space for the name tag */
     }
-
-    .letter__border .letter .content__letter {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        padding-top: .7rem;
-        padding-bottom: 70px;
-    }
-
-    .content__letter .right .text__letter {
-        margin-top: -14px;
-        padding: 20px 15px 10px 15px;
-        font-family: 'Dancing Script', cursive;
-        font-size: .8rem;
-    }
-
-    .content__letter .right .love__img {
-        opacity: 0;
-        position: absolute;
-        right: 126px;
-        top: 167px;
-    }
-
-    .love__img img {
- 
-            width: 84px;
-
-    }
-
     .content .right .image {
-        position: relative;
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        border: 6px solid var(--color-black);
+        width: 250px;
+        height: 250px;
+        border: 4px solid var(--color-black);
     }
-
     .name {
-        position: absolute;
-        padding: 0px 3px;
-        bottom: -6px;
-        border: 3px solid var(--color-black);
+        padding: 5px 20px;
+        bottom: -35px;
+    }
+    .name span {
+        font-size: 1.2rem;
     }
 
-    .name span {
+    /* --- Absolutely Positioned Decorations (Scale or Hide) --- */
+    /* Hide some large or awkwardly placed decorations on mobile */
+    .decorate_star,
+    .decorate_flower--one,
+    .decorate_flower--two,
+    .decorate_flower--three,
+    .smiley__icon,
+    .decorate_bottom {
+        display: none !important; 
+        visibility: hidden !important;
+    }
+
+    /* Re-position and scale the spinning circle */
+    .cricle {
+        top: 20px;
+        right: 20px;
+        transform: scale(0.7) !important; /* Smaller size */
+        animation: scaleCricle 3s 15s forwards ease-in-out;
+    }
+
+    /* Scale down balloons and reposition */
+    .right .balloon_one, .right .balloon_two {
+        width: 80px; /* Smaller container */
+        height: 80px;
+    }
+    .right .balloon_one img, .right .balloon_two img {
+        width: 70px !important; /* Smaller image */
+    }
+    .right .balloon_one{
+        top: -40px;
+        left: -30px;
+    }
+    .right .balloon_two{
+        top: 140px;
+        right: -30px;
+    }
+
+
+    /* --- Letter Box (Popup) Adjustments --- */
+    .box__letter .letter__border {
+        width: 95vw; /* Almost full width */
+        height: 70vh; /* Adjust height based on viewport */
+        padding: 10px;
+    }
+    .letter__border .letter {
+        padding-top: 10px;
+    }
+    .letter__border .letter .title__letter {
+        font-size: 1.5rem;
+    }
+    .title__letter .fa-solid{
         font-size: 1rem;
     }
 
-    .right .balloon_one {
-        position: absolute;
-        top: 10px;
-        left: -77px;
-        animation: balloon1 2s infinite linear;
+    .letter__border .letter .content__letter {
+        flex-direction: column; /* Stack image and text vertically */
+        padding-top: 0.5rem;
+        padding-bottom: 5px;
+    }
+    .content__letter .left, .content__letter .right {
+        width: 100%;
+        height: auto;
+        padding: 5px 10px;
+        border-right: none;
+        border-bottom: 2px solid var(--color-border); /* Separator */
+    }
+    .content__letter .right {
+        border-bottom: none;
     }
 
-    .right .balloon_one img{
-        width: 76px !important;
+    .content__letter .left #heart__letter {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        margin: 0 auto;
+        display: block;
+        border-radius: 50%;
     }
-    body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background: #ffe6f0;
-  text-align: center;
+    /* Hide extra heart decorations on mobile letter */
+    .content__letter .left .heart {
+        display: none;
+    }
+
+    .content__letter .right .text__letter {
+        margin-top: 10px;
+        font-size: 1rem;
+        padding: 5px 10px;
+    }
+    .content__letter .right .love__img,
+    .content__letter .right #mewmew {
+        position: static; /* Remove absolute positioning */
+        display: none; /* Hide for simplicity */
+    }
 }
 
-.container {
-  margin-top: 100px;
-}
 
-h1 {
-  color: #d63384;
-  font-size: 48px;
-  margin-bottom: 40px;
-}
+/* Your original media query was overly complicated and conflicting. */
+/* I've replaced it with the one above, but for completeness, the old one: */
 
-.button-group button {
-   position: relative;
-    right: 0px;
-    top: -200px;
-    background-color: var(--color-text-pink);
-    outline: none;
-    padding: 5px 20px;
-    font-size: 10px;
-    border-radius: 50px;
-    border: 3px solid var(--color-black);
-    font-family: "Sriracha", cursive;
-    display: flat;
-    align-items:center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 22;
-    transform: scale(1);
-    transition: all .5s ease-in-out;
-}
-
-.button-group button:hover {
-  background-color: #ff1493;
-  transform: scale(1.05);
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 105, 180, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
-}
-
-    
-
-}
+/* @media screen and (max-width: 658px) {
+    ... (removed conflicting content) ...
+} */
